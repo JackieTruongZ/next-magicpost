@@ -1,0 +1,48 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1rem;
+}
+
+.p-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.p-card {
+  width: 100%;
+}
+
+.p-panel {
+  padding: 1rem;
+}
+
+.signup-link p {
+  display: inline-block;
+  font-size: 14px;
+}
+
+.signup-link .signup-text {
+  color: red;
+  font-style: italic;
+}
+
+
+@media screen and (max-width: 768px) {
+  .login-form {
+    max-width: 100%;
+  }
+}
