@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import "../../public/theme/theme.css";
 import LoginForm from './loginForm';
 
 const Login = () => {

@@ -2,20 +2,44 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Panel } from 'primereact/panel';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import './style.css'
+import { BaseService } from '../service/BaseService';
+import { Toast } from 'primereact/toast';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const toast = useRef<Toast | null>(null);
+  const baseService = new BaseService();
 
-  const handleLogin = () => {
-    // Perform login logic here
+  const handleLogin = async () => {
+    const formLogin = {
+      email: username,
+      password: password
+    }
+    try {
+      const login = await baseService.login(formLogin);
+      if (login.data.status === 'OK') {
+        toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Login Success'});
+        window.localStorage.setItem('access_token', login.data.data.access_token)
+        const userInfor = await baseService.getUser();
+        window.localStorage.setItem('username', userInfor.data.data.user.username)
+        console.log(userInfor);
+        setTimeout(()=>{window.location.href = '/dashboard'},1000);
+      } else {
+        toast.current?.show({ severity: 'error', summary: 'Error', detail: `${login.data.message}` });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.current?.show({ severity: 'error', summary: 'Error', detail: `Error when Login !` });
+    }
   };
 
   return (
     <div className="login-form">
+      <Toast ref={toast} />
       <Card title="Login">
         <Panel>
           <div className="p-grid p-dir-col">
